@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Records</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body ng-app="studentApp">
+    <div ng-controller="StudentController" class="container">
+        <h1>Student Records</h1>
+
+        <form ng-submit="addOrUpdateStudent()">
+            <input type="hidden" ng-model="student.id">
+            <input type="text" ng-model="student.name" placeholder="Name" required>
+            <input type="email" ng-model="student.email" placeholder="Email" required>
+            <input type="text" ng-model="student.phone" placeholder="Phone" required>
+            <button type="submit">{{student._id ? 'Update' : 'Add'}} Student</button>
+        </form>
+
+        <h2>Student List</h2>
+        <ul>
+            <li ng-repeat="student in students">
+                <strong>{{student.name}}</strong><br>
+                Email: {{student.email}}<br>
+                Phone: {{student.phone}}<br>
+                <button ng-click="editStudent(student)">Edit</button>
+                <button ng-click="deleteStudent(student._id)">Delete</button>
+            </li>
+        </ul>
+
+    </div>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js"></script>
+    <script src="app.js"></script>
+    <script src="StudentController.js"></script>
+</body>
+
+</html>
