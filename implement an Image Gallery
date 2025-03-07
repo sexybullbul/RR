@@ -1,0 +1,134 @@
+Prac cal 10: Create an app using Flu er to implement an Image Gallery 
+1. Create a new Flu er project: 
+flu er create image_gallery_app 
+cd image_gallery_app 
+ 
+2. Add Dependencies: Open pubspec.yaml and add the following dependencies: 
+dependencies: 
+  flu er: 
+    sdk: flu er 
+  photo_view: ^0.13.0 
+  image_picker: ^0.8.4+4 
+Then run flu er pub get to download the dependencies 
+ 
+3. Open lib/main.dart and write the following code: 
+import 'package:flu er/material.dart'; 
+import 'package:image_picker/image_picker.dart'; 
+import 'package:photo_view/photo_view.dart'; 
+import 'package:photo_view/photo_view_gallery.dart'; 
+import 'package:flu er/services.dart'; 
+import 'dart:io'; 
+ 
+void main() { 
+  runApp(MyApp()); 
+} 
+ 
+class MyApp extends StatelessWidget { 
+  @override 
+  Widget build(BuildContext context) { 
+    return MaterialApp( 
+      tle: 'Image Gallery', 
+      theme: ThemeData( 
+        primarySwatch: Colors.blue, 
+      ), 
+      home: GalleryPage(), 
+    ); 
+  } 
+} 
+ 
+class GalleryPage extends StatefulWidget { 
+  @override 
+  _GalleryPageState createState() => _GalleryPageState(); 
+} 
+ 
+class _GalleryPageState extends State<GalleryPage> { 
+  List<File> _images = []; 
+  final ImagePicker _picker = ImagePicker(); 
+ 
+  Future<void> _pickImage() async { 
+    final XFile? image = await _picker.pickImage(source: ImageSource.gallery); 
+ 
+    if (image != null) { 
+      setState(() { 
+        _images.add(File(image.path)); 
+      }); 
+    } 
+  } 
+ 
+  @override 
+  Widget build(BuildContext context) { 
+    return Scaffold( 
+      appBar: AppBar( 
+        tle: Text('Image Gallery'), 
+        ac ons: [ 
+          IconBu on( 
+            icon: Icon(Icons.add_a_photo), 
+            onPressed: _pickImage, 
+          ), 
+        ], 
+      ), 
+      body: GridView.builder( 
+        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount( 
+          crossAxisCount: 3, 
+          crossAxisSpacing: 4, 
+          mainAxisSpacing: 4, 
+        ), 
+        itemCount: _images.length, 
+        itemBuilder: (context, index) { 
+          return GestureDetector( 
+            onTap: () { 
+              Navigator.push( 
+                context, 
+                MaterialPageRoute( 
+                  builder: (_) => FullScreenImageView( 
+                    images: _images, 
+                    ini alIndex: index, 
+                  ), 
+                ), 
+              ); 
+            }, 
+            child: Image.file( 
+              _images[index], 
+              fit: BoxFit.cover, 
+            ), 
+          ); 
+        }, 
+      ), 
+    ); 
+  } 
+} 
+ 
+class FullScreenImageView extends StatelessWidget { 
+  final List<File> images; 
+  final int ini alIndex; 
+ 
+  FullScreenImageView({required this.images, required this.ini alIndex}); 
+ 
+  @override 
+  Widget build(BuildContext context) { 
+    return Scaffold( 
+      appBar: AppBar( 
+        tle: Text('Full-Screen Image View'), 
+      ), 
+      body: PhotoViewGallery.builder( 
+        itemCount: images.length, 
+        builder: (context, index) { 
+          return PhotoViewGalleryPageOp ons( 
+            imageProvider: FileImage(images[index]), 
+            minScale: PhotoViewComputedScale.contained, 
+            maxScale: PhotoViewComputedScale.covered, 
+          ); 
+        }, 
+        scrollPhysics: BouncingScrollPhysics(), 
+        backgroundDecora on: BoxDecora on( 
+          color: Colors.black, 
+        ), 
+        pageController: PageController(ini alPage: ini alIndex), 
+      ), 
+    ); 
+  } 
+} 
+4. Test the applica on using the below command 
+flu er run 
+5. Build the applica on using the below command 
+flu er build apk –debug
