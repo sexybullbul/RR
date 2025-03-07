@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="errorHandlingApp">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AngularJS Error Handling</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/4.6.0/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js"></script>
+    <script src="app.js"></script>
+</head>
+
+<body ng-controller="MainController">
+
+    <div class="container mt-5">
+        <h2 class="text-center">AngularJS Error Handling Example</h2>
+
+        <div class="text-center">
+            <button class="btn btn-primary" ng-click="fetchData()">Fetch Data</button>
+        </div>
+
+        <div class="mt-4">
+            <div class="alert alert-danger" ng-if="error">
+                <strong>Error!</strong> {{ errorMessage }}
+            </div>
+            <ul class="list-group" ng-if="data.length > 0">
+                <li class="list-group-item" ng-repeat="item in data">
+                    {{ item.title }}
+                </li>
+            </ul>
+        </div>
+    </div>
+
+</body>
+
+</html>
