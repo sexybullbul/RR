@@ -1,0 +1,69 @@
+Prac cal 12: Create an app using Flutter to demonstrate naviga on in an App 
+1. Create a new Flu er project: 
+flu er create naviga on_demo 
+cd naviga on _demo 
+ 
+2. Main.dart 
+import 'package:flu er/material.dart'; 
+ 
+void main() { 
+  runApp(MyApp()); 
+} 
+ 
+class MyApp extends StatelessWidget { 
+  @override 
+  Widget build(BuildContext context) { 
+    return MaterialApp( 
+      debugShowCheckedModeBanner: false, 
+      tle: 'Flu er Naviga on Demo', 
+      theme: ThemeData( 
+        primarySwatch: Colors.blue, 
+      ), 
+      home: HomeScreen(), 
+    ); 
+  } 
+} 
+ 
+class HomeScreen extends StatelessWidget { 
+  @override 
+  Widget build(BuildContext context) { 
+    return Scaffold( 
+      appBar: AppBar( tle: Text('Home Screen')), 
+      body: Center( 
+        child: ElevatedBu on( 
+          onPressed: () { 
+            Navigator.push( 
+              context, 
+              MaterialPageRoute(builder: (context) => SecondScreen()), 
+            ); 
+          }, 
+          child: Text('Go to Second Screen'), 
+        ), 
+      ), 
+    ); 
+  } 
+} 
+ 
+class SecondScreen extends StatelessWidget { 
+  @override 
+  Widget build(BuildContext context) { 
+    return Scaffold( 
+      appBar: AppBar( tle: Text('Second Screen')), 
+      body: Center( 
+        child: ElevatedBu on( 
+          onPressed: () { 
+            Navigator.pop(context); 
+          }, 
+          child: Text('Go Back to Home Screen'), 
+        ), 
+      ), 
+    ); 
+  } 
+} 
+ 
+3. Test the applica on using the below command 
+f
+ lu er run 
+4. Build the applica on using the below command 
+f
+ lu er build apk –debug
