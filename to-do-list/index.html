@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="todoApp">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AngularJS To-Do List</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/4.6.0/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js"></script>
+    <script src="app.js"></script>
+    <style>
+        .completed {
+            text-decoration: line-through;
+            color: gray;
+        }
+    </style>
+</head>
+
+<body ng-controller="TodoController">
+
+    <div class="container mt-5">
+        <h2 class="text-center">To-Do List</h2>
+
+        <div class="input-group mb-3">
+            <input type="text" class="form-control" ng-model="newTask" placeholder="Enter new task">
+            <div class="input-group-append">
+                <button class="btn btn-primary" ng-click="addTask()">Add Task</button>
+            </div>
+        </div>
+
+        <button class="btn btn-outline-dark btn-rounded" mdbRipple rippleColor="dark"
+            ng-click="filterTasks('all')">All</button>
+        <button class="btn btn-outline-dark btn-rounded" mdbRipple rippleColor="dark"
+            ng-click="filterTasks('active')">Active</button>
+        <button class="btn btn-outline-dark btn-rounded" mdbRipple rippleColor="dark"
+            ng-click="filterTasks('completed')">Completed</button>
+
+        <br /><br />
+        
+        <ul class="list-group">
+            <li class="list-group-item d-flex justify-content-between align-items-center"
+                ng-repeat="task in filteredTasks()">
+                <div>
+                    <input type="checkbox" ng-model="task.completed">
+                    <span ng-class="{completed: task.completed}" ng-bind="task.name"></span>
+                </div>
+                <button class="btn btn-danger btn-sm" ng-click="removeTask($index)">Delete</button>
+            </li>
+        </ul>
+
+        <p class="text-muted mt-3" ng-show="tasks.length == 0">
+            No tasks available. Add new tasks!
+        </p>
+
+    </div>
+
+</body>
+
+</html>
